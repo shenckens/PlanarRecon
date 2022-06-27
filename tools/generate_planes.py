@@ -86,7 +86,7 @@ class ColorPalette:
 def loadClassMap(args):
     classMap = {}
     classLabelMap = {}
-    with open(args.data_raw_path[:-10] + '/scannetv2-labels.combined.tsv') as info_file:
+    with open(args.data_raw_path[:-7] + '/scannetv2-labels.combined.tsv') as info_file:
         line_index = 0
         for line in info_file:
             if line_index > 0:
@@ -753,7 +753,7 @@ def generate_planes(args, scene_id, high_res=False, save_mesh=False, debug=False
         for i in range(len(planes)):
             planes_tensor[planePointIndices[i]] = torch.Tensor(planes[i]).cuda()
             indices_tensor[planePointIndices[i]] = i
-        
+
         valid = (planes_tensor != 0).any(-1)
         invalid_ind = torch.nonzero(valid == 0, as_tuple=False).squeeze(1)
         planes_tensor_valid = planes_tensor[valid]
@@ -762,7 +762,7 @@ def generate_planes(args, scene_id, high_res=False, save_mesh=False, debug=False
         plane_points = points_tensor_valid - planes_tensor_valid[:, :3] * t.unsqueeze(-1)
         points_tensor[valid] = plane_points
         points_tensor[invalid_ind] = plane_points[0]
-        
+
         n = 100
         part_num = faces_copy.shape[0] // n
         match_list = []
