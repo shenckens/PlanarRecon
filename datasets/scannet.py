@@ -27,7 +27,7 @@ class ScanNetDataset(Dataset):
         self.epoch = None
         self.tsdf_cashe = {}
         self.planes_cashe = {}
-        self.max_cache = 1  
+        self.max_cache = 1
 
     def build_list(self):
         with open(os.path.join(self.datapath, self.planes_file, 'fragments_{}.pkl'.format(self.mode)), 'rb') as f:
@@ -44,7 +44,7 @@ class ScanNetDataset(Dataset):
     def read_cam_file(self, filepath, vid):
         intrinsics = np.loadtxt(os.path.join(filepath, 'intrinsic', 'intrinsic_color.txt'), delimiter=' ')[:3, :3]
         intrinsics = intrinsics.astype(np.float32)
-        extrinsics = np.loadtxt(os.path.join(filepath, 'pose', 'frame-{0:06d}.pose.txt'.format(vid)))
+        extrinsics = np.loadtxt(os.path.join(filepath, 'pose', '{}.txt'.format(vid)))
         return intrinsics, extrinsics
 
     def read_img(self, filepath):
@@ -89,11 +89,11 @@ class ScanNetDataset(Dataset):
             # load images
             imgs.append(
                 self.read_img(
-                    os.path.join(self.datapath, self.source_path, meta['scene'], 'color', 'frame-{0:06d}.color.jpg'.format(vid))))
+                    os.path.join(self.datapath, self.source_path, meta['scene'], 'color', '{}.jpg'.format(vid))))
 
             depth.append(
                 self.read_depth(
-                    os.path.join(self.datapath, self.source_path, meta['scene'], 'depth', 'frame-{0:06d}.depth.pgm'.format(vid)))
+                    os.path.join(self.datapath, self.source_path, meta['scene'], 'depth', '{}.png'.format(vid)))
             )
 
             # load intrinsics and extrinsics

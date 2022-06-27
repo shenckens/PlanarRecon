@@ -35,7 +35,7 @@ class ScanNetDataset(torch.utils.data.Dataset):
             dict of meta data and images for a single frame
         """
         id = self.id_list[id]
-        cam_pose = np.loadtxt(os.path.join(self.data_path, self.scene, "pose",  'frame-{0:06d}.pose.txt'.format(id)), delimiter=' ')
+        cam_pose = np.loadtxt(os.path.join(self.data_path, self.scene, "pose", '{}.txt'.format(id)), delimiter=' ')
 
         # Read depth image and camera pose
         # depth_im = cv2.imread(os.path.join(self.data_path, self.scene, "depth", 'frame-{0:06d}.depth.pgm'.format(id)), -1).astype(
