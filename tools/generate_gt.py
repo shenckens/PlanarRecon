@@ -126,7 +126,7 @@ def compute_global_volume(args, cam_intr, cam_pose_list):
 
 def save_label_full(args, scene, vol_dim, vol_origin, planes, plane_points):
     planes = np.concatenate([planes, - np.ones_like(planes[:, :1])], axis=-1)
-    
+
     # ========================generate indicator gt========================
     planes = torch.from_numpy(planes).cuda()
     coords = coordinates(vol_dim, device=planes.device)
@@ -282,7 +282,7 @@ if __name__ == "__main__":
     ray.init(num_cpus=all_proc * (args.num_workers + 1), num_gpus=args.n_gpu)
 
     if args.dataset == 'scannet':
-        args.data_raw_path = os.path.join(args.data_path, 'scans_raw/')
+        args.data_raw_path = os.path.join(args.data_path, 'scans/')
         args.data_path = os.path.join(args.data_path, 'scans')
         files = sorted(os.listdir(args.data_path))
     else:
