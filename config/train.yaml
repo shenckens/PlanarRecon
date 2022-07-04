@@ -6,7 +6,7 @@ SAVE_FREQ: 1
 MODE: 'train'
 
 TRAIN:
-  PATH: 'data/scannet'
+  PATH: '/project/henckens/data/scannet'
   EPOCHS: 499
   N_VIEWS: 9
   LR: 5e-4
@@ -14,7 +14,7 @@ TRAIN:
   LREPOCHS: '10,20,40,80,320,640,1280,2560,5000:2'
 
 TEST:
-  PATH: 'data/scannet'
+  PATH: '/project/henckens/data/scannet'
   N_VIEWS: 9
   N_WORKERS: 4
 
@@ -38,4 +38,3 @@ MODEL:
   POS_WEIGHT: 1.5
 
   TRACKING: True
-

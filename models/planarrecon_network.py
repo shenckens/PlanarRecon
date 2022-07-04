@@ -36,7 +36,7 @@ class FragNet(nn.Module):
     '''
     Coarse-to-fine network.
     '''
- 
+
     def __init__(self, cfg):
         super(FragNet, self).__init__()
         self.cfg = cfg
@@ -291,7 +291,7 @@ class FragNet(nn.Module):
                                                                                                      keepdim=True)
                 D = -(offset_points.unsqueeze(1) @ normals.unsqueeze(2)).squeeze(1)
                 planes = torch.cat([normals, D], dim=1)
-                
+
                 center_points = r_coords[occupancy, :3] + off_center[occupancy]
                 center_points = torch.cat((center_points, torch.ones_like(center_points[:, :1])), dim=1)
                 for b in range(bs):
@@ -304,7 +304,7 @@ class FragNet(nn.Module):
                         planes_gt[b] = (inputs['world_to_aligned_camera'][b].transpose(0,
                                                                                     1) @ planes_gt[b].transpose(
                             0, 1)).transpose(0, 1)
-                    
+
                     center_points[ind] = center_points[ind] @ torch.inverse(inputs['world_to_aligned_camera'])[b].permute(1, 0).contiguous()
                 center_points = center_points[:, :3]
 
@@ -315,7 +315,7 @@ class FragNet(nn.Module):
                 outputs['embedding'] = embedding
                 outputs['planes_gt'] = planes_gt
                 outputs['feat'] = feat
-                
+
         return outputs, loss_dict
 
     def compute_offset_loss(self, offset, gt_offsets):
@@ -365,7 +365,7 @@ class FragNet(nn.Module):
         w_for_1 *= pos_weight
         occ_loss = F.binary_cross_entropy_with_logits(occ, occ_target.float(), pos_weight=w_for_1)
 
-        # plane loss            
+        # plane loss
         class_logits = class_logits[occ_target]
         residuals = residuals[occ_target]
         label_target = label_target[occ_target]
@@ -386,7 +386,7 @@ class FragNet(nn.Module):
 
             # extract gt for planes
             bs = len(anchors_gt)
-            anchors_target = torch.zeros([label_target.shape[0]], device=label_target.device).long()
+            anchors_target = torch.zeros([label_target.shape[0]], device=label_target.device)
             residual_target = torch.zeros([label_target.shape[0], 3], device=label_target.device)
             planes_target = torch.zeros([label_target.shape[0], 4], device=label_target.device)
             for b in range(bs):
@@ -428,7 +428,7 @@ class FragNet(nn.Module):
                 # for b in range(bs):
                 #     batch_ind = torch.nonzero(r_coords[:, -1] == b, as_tuple=False).squeeze(1)
                 #     mean_xyz_target[batch_ind] = mean_xyz[b][label_target[batch_ind]]
-                
+
                 r_coords = r_coords[:, :3]
 
                 gt_offsets_center = mean_xyz_target - r_coords  # (N, 3)
