@@ -58,7 +58,7 @@ _C.MODEL.PIXEL_MEAN = [103.53, 116.28, 123.675]
 _C.MODEL.PIXEL_STD = [1., 1., 1.]
 _C.MODEL.THRESHOLDS = [0, 0, 0]
 _C.MODEL.POS_WEIGHT = 1.0
-_C.MODEL.NORMAL_ANCHOR_PATH = './data/scannet/planes_9/normal_anchors.npy'
+_C.MODEL.NORMAL_ANCHOR_PATH = '/project/henckens/data/scannet/planes_9/normal_anchors.npy'
 
 _C.MODEL.BACKBONE2D = CN()
 _C.MODEL.BACKBONE2D.ARC = 'fpn-mnas'
