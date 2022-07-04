@@ -386,7 +386,7 @@ class FragNet(nn.Module):
 
             # extract gt for planes
             bs = len(anchors_gt)
-            anchors_target = torch.zeros([label_target.shape[0]], device=label_target.device)
+            anchors_target = torch.zeros([label_target.shape[0]], device=label_target.device).long()
             residual_target = torch.zeros([label_target.shape[0], 3], device=label_target.device)
             planes_target = torch.zeros([label_target.shape[0], 4], device=label_target.device)
             for b in range(bs):
