@@ -63,11 +63,11 @@ class ScanNetDataset(Dataset):
         if scene not in self.planes_cashe.keys():
             if len(self.planes_cashe) > self.max_cache:
                 self.planes_cashe = {}
-            planes = np.load(os.path.join('./data/scannet/planes_9', scene, 'annotation', 'planes.npy'))
+            planes = np.load(os.path.join('/project/henckens/data/scannet/planes_9', scene, 'annotation', 'planes.npy'))
             # a, b, c, -1
             planes = np.concatenate([planes, - np.ones_like(planes[:, :1])], axis=-1)
             plane_points = list(
-                np.load(os.path.join('./data/scannet/planes_9', scene, 'annotation', 'plane_points.npy'), allow_pickle=True))
+                np.load(os.path.join('/project/henckens/data/scannet/planes_9', scene, 'annotation', 'plane_points.npy'), allow_pickle=True))
 
             indices = np.load(os.path.join(data_path, scene, 'indices.npz'))
             indices = indices.f.arr_0
