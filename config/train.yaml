@@ -7,7 +7,7 @@ MODE: 'train'
 
 TRAIN:
   PATH: '/project/henckens/data/scannet'
-  EPOCHS: 35
+  EPOCHS: 70
   N_VIEWS: 9
   LR: 5e-4
   N_WORKERS: 8
@@ -37,4 +37,4 @@ MODEL:
   THRESHOLDS: [0, 0, 0]
   POS_WEIGHT: 1.5
 
-  TRACKING: False
+  TRACKING: True
