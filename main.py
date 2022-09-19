@@ -117,7 +117,9 @@ transforms = transforms.Compose(transform)
 # dataset, dataloader
 MVSDataset = find_dataset_def(cfg.DATASET)
 train_dataset = MVSDataset(cfg.TRAIN.PATH, "train", transforms, cfg.TRAIN.N_VIEWS, len(cfg.MODEL.THRESHOLDS) - 1)
-test_dataset = MVSDataset(cfg.TEST.PATH, "val", transforms, cfg.TEST.N_VIEWS, len(cfg.MODEL.THRESHOLDS) - 1)
+# test_dataset = MVSDataset(cfg.TEST.PATH, "val", transforms, cfg.TEST.N_VIEWS, len(cfg.MODEL.THRESHOLDS) - 1)
+test_dataset = MVSDataset(cfg.TEST.PATH, "test", transforms, cfg.TEST.N_VIEWS, len(cfg.MODEL.THRESHOLDS) - 1)
+
 
 if cfg.DISTRIBUTED:
     train_sampler = DistributedSampler(train_dataset, shuffle=False)
@@ -266,7 +268,7 @@ def test(from_latest=True):
                                                                                                 time.time() - start_time))
                     avg_test_scalars.update(scalar_outputs)
                     del scalar_outputs
-                    
+
                     if batch_idx % 100 == 0:
                         logger.info("Iter {}/{}, test results = {}".format(batch_idx, len(TestImgLoader),
                                                                            avg_test_scalars.mean()))
@@ -274,7 +276,7 @@ def test(from_latest=True):
                     # save mesh
                     if cfg.SAVE_SCENE_MESH:
                         save_mesh_scene(outputs, sample, epoch_idx)
-                    
+
                 save_scalars(tb_writer, 'fulltest', avg_test_scalars.mean(), epoch_idx)
                 logger.info("epoch {} avg_test_scalars:".format(epoch_idx), avg_test_scalars.mean())
 
